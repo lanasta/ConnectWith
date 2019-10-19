@@ -1,0 +1,89 @@
+@font-face {
+    @font-family:"Helvetica";
+    src: url("/test1/helvetica-neue-bold.ttf") format ("ttf");
+}
+
+@font-face {
+    @font-family: "Intro";
+    src: url("/test1/intro.otf") format ("otf");
+}
+
+@font-face {
+    @font-family: "Gist";
+    src: url("/test1/GistLight.otf") format=("otf");
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 4em;
+    padding: 2em;
+    background-color: #fdfdff;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+div {
+    border-radius: 0.5em;
+}
+
+a:link, a:visited {
+    color: #38488f;
+    text-decoration: none;
+}
+@media (max-width: 700px) {
+    div {
+        margin: 0 auto;
+        width: auto;
+    }
+}
+  
+  h1{
+    font-family: "Intro";
+    color: #8a009a;
+  }
+  
+  #connectLogo, #withLogo {
+    display: inline-block;
+    float: none;
+    position: relative;
+    font-size: 300%;
+  }
+  
+  h2{
+    font-family: "Gist";
+    color:#efaa05;
+    display:inline;
+  }
+  #locationForm , #professionForm {
+    text-align: center;
+  }
+  p{
+    text-align: center;
+    font-family: "Helvetica";
+    color: #000000;
+  }
+  #logo {
+    text-align: center;
+  }
+  #link {
+   color:  white;
+  }
+  #buttonDivide {
+    text-align: center;
+  }
+  button {
+    background-color: #efaa05;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 20px 64px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    align: center;
+  }

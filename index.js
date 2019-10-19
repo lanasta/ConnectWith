@@ -4,6 +4,10 @@ const path = require('path');
 const app = express();
 let searchResults = {};
 
+app.get('/master.css', function(req, res) {
+    res.sendFile(__dirname + "/master.css");
+  });
+
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
@@ -16,10 +20,11 @@ app.get('/api/searchConnections/:skill', async (req, res) => {
     });
 })
 
+
 app.listen(3000, console.log('Listening on port 3000...'));
 
 async function getLinkedInConnections(keyword, callback) {
-    const wsChromeEndpointurl = 'ws://127.0.0.1:9222/devtools/browser/6ac0255a-d963-4165-9efe-c32375f8ebf3';
+    const wsChromeEndpointurl = 'ws://127.0.0.1:9222/devtools/browser/a36e5926-0f4b-4662-ac0d-b9dc42e9dc35';
     const browser = await puppeteer.connect({
         browserWSEndpoint: wsChromeEndpointurl,
         headless: true
@@ -57,7 +62,9 @@ async function buildObjectFromElements(page, callback) {
         let profileSnippets = await element.$$('.search-result__snippets');
         properties.profileSnippet = await parseTextElement(page, profileSnippets);
         let keyName = await transformToKey(properties.name);
-        userSearchResults.push({keyName : properties});
+        let userObj = {};
+        userObj[keyName] = properties;
+        userSearchResults.push(userObj);
         counter += 1;
         if (counter == elements.length) {
             callback({"searchResults" : userSearchResults});

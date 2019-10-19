@@ -7,40 +7,12 @@
     <meta charset="utf-8" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style type="text/css">
-    body {
-        background-color: #f0f0f2;
-        margin: 0;
-        padding: 0;
-        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-
-    }
-    div {
-        width: 600px;
-        margin: 5em auto;
-        padding: 2em;
-        background-color: #fdfdff;
-        border-radius: 0.5em;
-        box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);
-    }
-    a:link, a:visited {
-        color: #38488f;
-        text-decoration: none;
-    }
-    @media (max-width: 700px) {
-        div {
-            margin: 0 auto;
-            width: auto;
-        }
-    }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/master.css">
     <script>
 
 
       function getOcc(){
         var x = document.getElementById("occupation").value;
-        //alert("hjkfdhfkj")
-        console.log(x);
         sendRequestForSkillSearch(x);
       }
 
@@ -58,8 +30,22 @@
           if (xhr.status != 200) { // analyze HTTP status of the response
           alert(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
           } else { // show the result
-            console.log(xhr.responseText);
-            document.getElementById("searchRes").innerHTML = xhr.responseText;
+            var result = JSON.parse(xhr.response);
+            result = result.searchResults;
+            var htmlContent = "<div>";
+            for (var i in result) {
+                console.log(result[i]);
+                for (var k in result[i]) {
+                    var item = result[i][k];
+                    console.log(item);
+                    for (var j in item) {
+                        htmlContent += "<p>" + item[j] + "</p>";
+                    }
+                }
+                htmlContent += "<br>";
+            }
+            htmlContent += "</div>";
+            document.getElementById("searchRes").innerHTML = htmlContent;
           }
           };
       }
@@ -68,6 +54,11 @@
 </head>
 
 <body>
+        <div id='logo'>
+                <h1 id='connectLogo'> Connect</h1>
+                <h2 id='withLogo' > With</h2>
+                </div>
+                
 <div>
     <h1>What is your desired occupation?</h1>
     <input type="text" id="occupation">
