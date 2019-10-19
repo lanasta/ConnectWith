@@ -42,7 +42,7 @@ async function getLinkedInConnections(keyword, callback) {
 }
 
 async function buildObjectFromElements(page, callback) {
-    let userSearchResults = {};
+    let userSearchResults = [];
     let counter = 0;
     let elements = await page.$$('.search-result__info');
     console.log('len', elements.length);
@@ -57,12 +57,10 @@ async function buildObjectFromElements(page, callback) {
         let profileSnippets = await element.$$('.search-result__snippets');
         properties.profileSnippet = await parseTextElement(page, profileSnippets);
         let keyName = await transformToKey(properties.name);
-        userSearchResults[keyName] = properties;
-        searchResults["searchResults"] = userSearchResults;
-        console.log(searchResults);
+        userSearchResults.push({keyName : properties});
         counter += 1;
         if (counter == elements.length) {
-            callback(searchResults);
+            callback({"searchResults" : userSearchResults});
         }
     });
 }
