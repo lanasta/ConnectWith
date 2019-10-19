@@ -1,0 +1,22 @@
+{
+  "name": "hackharvard19",
+  "version": "1.0.0",
+  "description": "Test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lanasta/HackHarvard19.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lanasta/HackHarvard19/issues"
+  },
+  "homepage": "https://github.com/lanasta/HackHarvard19#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
