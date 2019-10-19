@@ -1,11 +1,12 @@
 const puppeteer = require('puppeteer');
 const express = require('express');
+const path = require('path');
 const app = express();
 let searchResults = {};
 
-app.get('/', (req, res) => {
-    res.send("Team AAAB here!");
-})
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
+});
 
 app.get('/api/searchConnections/:skill', async (req, res) => {
     var skill = req.params.skill;
