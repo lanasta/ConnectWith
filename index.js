@@ -19,7 +19,7 @@ app.get('/api/searchConnections/:skill', async (req, res) => {
 app.listen(3000, console.log('Listening on port 3000...'));
 
 async function getLinkedInConnections(keyword, callback) {
-    const wsChromeEndpointurl = 'ws://127.0.0.1:9222/devtools/browser/a36e5926-0f4b-4662-ac0d-b9dc42e9dc35';
+    const wsChromeEndpointurl = 'ws://127.0.0.1:9222/devtools/browser/6ac0255a-d963-4165-9efe-c32375f8ebf3';
     const browser = await puppeteer.connect({
         browserWSEndpoint: wsChromeEndpointurl,
         headless: true
@@ -102,6 +102,3 @@ async function parseTextElement(page, elements) {
 async function sanitizeText(text) {
     return (text.replace(/(\r\n|\n|\r)/gm,"")).trim();
 }
-
-
-

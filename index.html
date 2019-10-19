@@ -13,7 +13,7 @@
         margin: 0;
         padding: 0;
         font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        
+
     }
     div {
         width: 600px;
@@ -33,15 +33,54 @@
             width: auto;
         }
     }
-    </style>    
+    </style>
+    <script>
+
+
+      function getOcc(){
+        var x = document.getElementById("occupation").value;
+        //alert("hjkfdhfkj")
+        console.log(x);
+        sendRequestForSkillSearch(x);
+      }
+
+      function sendRequestForSkillSearch(skillName) {
+          let xhr = new XMLHttpRequest();
+    // 2. Configure it: GET-request for the URL /article/.../load
+          //xhr.open('GET', '/api/searchConnections/' + 'soccer');
+          xhr.open('GET', '/api/searchConnections/' + skillName);
+
+          // 3. Send the request over the network
+          xhr.send();
+
+          // 4. This will be called after the response is received
+          xhr.onload = function() {
+          if (xhr.status != 200) { // analyze HTTP status of the response
+          alert(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
+          } else { // show the result
+            console.log(xhr.responseText);
+            document.getElementById("searchRes").innerHTML = xhr.responseText;
+          }
+          };
+      }
+
+    </script>
 </head>
 
 <body>
 <div>
-    <h1>Example Domain</h1>
-    <p>This domain is for use in illustrative examples in documents. You may use this
+    <h1>What is your desired occupation?</h1>
+    <input type="text" id="occupation">
+    <button type="button" onclick="getOcc()" name="button">Find</button>
+
+    </form>
+    <p id='searchRes'>
+
+    </p>
+
+    <!-- <p>This domain is for use in illustrative examples in documents. You may use this
     domain in literature without prior coordination or asking for permission.</p>
-    <p><a href="https://www.iana.org/domains/example">More information...</a></p>
+    <p><a href="https://www.iana.org/domains/example">More information...</a></p> -->
 </div>
 </body>
 </html>
