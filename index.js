@@ -4,6 +4,18 @@ const path = require('path');
 const app = express();
 let searchResults = {};
 
+app.get('/logo.png', function(req, res) {
+    res.sendFile(__dirname + "/logo.png");
+});
+
+app.get('/favicon.ico', function(req, res) {
+    res.sendFile(__dirname + "/favicon.ico");
+});
+
+app.get('/bg.jpg', function(req, res) {
+    res.sendFile(__dirname + "/bg.jpg");
+});
+
 app.get('/master.css', function(req, res) {
     res.sendFile(__dirname + "/master.css");
   });
