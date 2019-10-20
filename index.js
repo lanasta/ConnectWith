@@ -32,7 +32,6 @@ app.get('/api/searchConnections/:skill', async (req, res) => {
     });
 })
 
-
 app.listen(3000, console.log('Listening on port 3000...'));
 
 async function getLinkedInConnections(keyword, callback) {
@@ -58,12 +57,27 @@ async function getLinkedInConnections(keyword, callback) {
     await buildObjectFromElements(page, callback);
 }
 
+async function sendMessage(page, name, confirm, callback) {
+    let elements = await page.$$('.message-anywhere-button');
+    await elements.map(async (element) => {
+        const outerHtml = await page.evaluate(element => element.outerHTML, element);
+        if (outerHtml.indexOf(name) > -1){
+            await element.click();
+            await page.type('.msg-form__contenteditable', 'test comment whats good', {delay: 20})
+            if (confirm) {
+                await page.keyboard.press('Enter');        
+            }
+        }
+    });    
+}
+
 async function buildObjectFromElements(page, callback) {
     let userSearchResults = [];
     let counter = 0;
     let elements = await page.$$('.search-result__info');
-    console.log('len', elements.length);
+    console.log(elements);
     await elements.map(async (element) => {
+        console.log(element);
         let properties = {};
         let names = await element.$$(".actor-name");
         properties.name = await parseTextElement(page, names);
@@ -93,7 +107,6 @@ async function autoScroll(page){
                 var scrollHeight = document.body.scrollHeight;
                 window.scrollBy(0, distance);
                 totalHeight += distance;
-
                 if(totalHeight >= scrollHeight){
                     clearInterval(timer);
                     resolve();

@@ -8,53 +8,106 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/master.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700i,900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-      function getOcc(){
-        var x = document.getElementById("occupation").value;
-        sendRequestForSkillSearch(x);
-      }
+      $(document).ready(function(){
+        var currentUser = {};
+        var usersList = {};
+//  $("#secondMenu").hide();
 
-      function sendRequestForSkillSearch(skillName) {
-          let xhr = new XMLHttpRequest();
-    // 2. Configure it: GET-request for the URL /article/.../load
-          //xhr.open('GET', '/api/searchConnections/' + 'soccer');
-          xhr.open('GET', '/api/searchConnections/' + skillName);
+        $("#findButton").click(()=> {
+          getOcc();
+        });
 
-          // 3. Send the request over the network
-          xhr.send();
+        $("#box1").click(()=> {
+          generateMessage("network");
+        });
 
-          // 4. This will be called after the response is received
-          xhr.onload = function() {
-          if (xhr.status != 200) { // analyze HTTP status of the response
-          alert(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
-          } else { // show the result
-            var result = JSON.parse(xhr.response);
-            result = result.searchResults;
-            var htmlContent = "<div class = \"results-box\" ><p class='resultsTitle'>Results for \"" + skillName + "\"</p>";
-            for (var i in result) {
-                console.log(result[i]);
-                for (var k in result[i]) {
-                    var item = result[i][k];
-                    console.log(item);
-                    for (var j in item) {
-                      if (j == "name"){
-                        htmlContent += "<p class = \"people\" id = \"name\">" + item[j] + "</p>";
-                        }
-                      else{
-                          htmlContent += "<p class = \"people\">" + item[j] + "</p>";
-                      }
-                    }
-                }
-                htmlContent += "<br>";
+        $("#box2").click(()=> {
+          generateMessage("jobSearch");
+        });
+
+        $("#box3").click(()=> {
+          generateMessage("hire");
+        });
+
+
+        
+
+        $('body').on('click', '.messageButton', function() {
+            console.log(this);
+            var buttonId = this.id;
+            console.log(buttonId);
+            var key =  buttonId.replace('MessageButton','');
+            console.log(key);
+            console.log(usersList);
+            const user = getUserObj(key);
+            renderSendMessageMenu(user);
+        });
+
+        function renderSendMessageMenu(user) {
+          $("#firstMenu").hide();
+          $("#secondMenu").show();
+
+        }
+
+        function getUserObj(keyName) {
+          for (var k of usersList) {
+            if (k && k[keyName]) {
+              return k[keyName];
             }
-            htmlContent += "</div>";
-            document.getElementById("searchRes").innerHTML = htmlContent;
           }
-          };
-      }
+        }
+        
+        function getOcc(){
+          var x = document.getElementById("occupation").value;
+          sendRequestForSkillSearch(x);
+        }
 
+        function sendRequestForSkillSearch(skillName) {
+            document.getElementById("searchRes").innerHTML = "Search in progress...";
+            let xhr = new XMLHttpRequest();
+      // 2. Configure it: GET-request for the URL /article/.../load
+            //xhr.open('GET', '/api/searchConnections/' + 'soccer');
+            xhr.open('GET', '/api/searchConnections/' + skillName);
+
+            // 3. Send the request over the network
+            xhr.send();
+
+            // 4. This will be called after the response is received
+            xhr.onload = function() {
+            if (xhr.status != 200) { // analyze HTTP status of the response
+            alert(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
+            } else { // show the result
+              var result = JSON.parse(xhr.response);
+              result = result.searchResults;
+              var htmlContent = "<div class = \"results-box\" ><p class='resultsTitle'>Results for \"" + skillName + "\"</p>";
+              usersList = result;
+              for (var i in result) {
+                  console.log(result[i]);
+                  for (var k in result[i]) {
+                      var item = result[i][k];
+                      htmlContent += '<div><i id="' + k+ 'MessageButton" class="messageButton fa fa-envelope-o" aria-hidden="true"></i>';
+                      for (var j in item) {
+                        if (j == "name"){
+                          htmlContent += "<p class = \"people\" id = \"name\">" + item[j] + "</p>";
+                          }
+                        else{
+                            htmlContent += "<p class = \"people\">" + item[j] + "</p>";
+                        }
+                      }
+                      htmlContent += "</div>";
+                  }
+              }
+              htmlContent += "</div>";
+              document.getElementById("searchRes").innerHTML = htmlContent;
+            }
+            };
+        }
+      });
     </script>
 </head>
 
@@ -68,28 +121,44 @@
                   <h2 id='withLogo' > With</h2>
                 </div>
           </div>
-          <div class='slogan'>Who will you connect with today?</div>
+          <div class='slogan'>who will you connect with today?</div>
           <img src="/bg.jpg"/>
         </div>
         <div class='wrapper'>
-          <p class='quickPitch'>Need volunteers for the social event you have in mind? Have a cool start-up idea and need to recruit?
-            Want to network with people and learn from seniors in your field? Quickly get conversations started by using our tool to search within your LinkedIn connections and get
-            pre-filled, customizable messages to send to your personal connections! </p>
-          <p>What related interest, skill or profession would you like to find people to connect with?</p>
-          <input type="text" id="occupation">
-            <button type="button" onclick="getOcc()" name="button">Find</button>
-          </form>
-          <p id='searchRes'>
-
-          </p>
-
-        <!-- <p>This domain is for use in illustrative examples in documents. You may use this
-        domain in literature without prior coordination or asking for permission.</p>
-        <p><a href="https://www.iana.org/domains/example">More information...</a></p> -->
-      </div>
+          <div id='firstMenu'>
+            <p class='quickPitch'>Job searching? Need volunteers for the social event you have in mind? Have a cool start-up idea and need to recruit?
+              Want to network with people and learn from seniors in your field? Quickly get conversations started by using our tool to search within your LinkedIn connections and get
+              pre-filled, customizable messages to send to your personal connections! </p>
+            <p>What related interest, skill or profession would you like to find people to connect with?</p>
+            <input type="text" id="occupation">
+              <button type="button" id='findButton' name="button">Find</button>
+            </form>
+            <p id='searchRes'>
+            </p>
+          </div>
+          <div id='secondMenu'>
+            <div class='results-box' style='padding-bottom:3em'><p class='resultsTitle'>Select message template</p></div>
+            <div class="flex-box">
+                <div class="row1">
+                  <div id="box1" class="boxMenu"><br><h1 class='boxText' id="box1text">Network with like-minded individuals from your field.</h1><h1 id="icon1"><i class="fa fa-users" ></i></h1></div>
+                  <div id="box2" class="boxMenu"><br><h1 class='boxText' id="box2text">Find the right connections to get your dream job.</h1> <h1 id="icon2"><i class="fa fa-black-tie"></i></h1></div>
+                  <div id="box3" class="boxMenu"><h1 class='boxText' id="box3text">Connect with potential employees to find the right person for your team.</h1><h1 id="icon3"><i class="fa fa-suitcase"></i></h1></div>
+                </div>
+                <div class="row2">
+                  <div id="column1"> <textarea id='messageToSend'>Click one of the menus above to explore message template options</textarea> </div>
+                    <div id="column2">
+                      <div id="button1"><button class='msgAddon' type="link" name="button1"> <a id='link' href= "https://..."> Ask for a <b>video call</b>.</a> </button><div>
+                      <div id="button3"><button class='msgAddon' type="link" name="button3"> <a id='link' href= "https://..."> Ask to <b>work together</b>.</a></button></div>
+                      <div id="button4"><button class='msgAddon' type="link" name="button4"> <a id='link' href= "https://..."> Ask for a <b>reference</b>.</a></button></div>
+                </div>
+              </div>
+              </div>
+              </div>
+            </div>
+        </div>
   </div>
 </body>
 <footer>
-    Made at HackHarvard '19 in Boston, MA by Anastasia, Brandon, Anushka, Abdulai
+    🚀 Made at HackHarvard '19 in Boston, MA by Anastasia, Brandon, Anushka, Abdulai
 </footer>
 </html>
