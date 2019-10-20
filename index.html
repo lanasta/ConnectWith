@@ -10,7 +10,13 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/master.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700i,900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
+    $(document).ready(function(){
+      $("#findConnectionsButton").click(function(){
+        getOcc();
+      });
+      
       function getOcc(){
         var x = document.getElementById("occupation").value;
         sendRequestForSkillSearch(x);
@@ -54,6 +60,7 @@
           }
           };
       }
+    });
 
     </script>
 </head>
@@ -77,7 +84,7 @@
             pre-filled, customizable messages to send to your personal connections! </p>
           <p>What skill or profession would you like to find people to connect with?</p>
           <input type="text" id="occupation">
-            <button type="button" onclick="getOcc()" name="button">Find</button>
+            <button id="findConnectionsButton" type="button" onclick="getOcc()" name="button">Find</button>
           </form>
           <p id='searchRes'>
 
@@ -89,4 +96,7 @@
       </div>
   </div>
 </body>
+<footer>
+    Made at HackHarvard in Boston, MA by Anastasia, Brandon, Anushka, Abdulai
+</footer>
 </html>
