@@ -2,15 +2,14 @@
 <!doctype html>
 <html>
 <head>
-    <title>Example Domain</title>
+    <title>ConnectWith</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/master.css">
     <script>
-
-
       function getOcc(){
         var x = document.getElementById("occupation").value;
         sendRequestForSkillSearch(x);
@@ -67,7 +66,10 @@
           <img src="/bg.jpg"/>
         </div>
         <div class='wrapper'>
-          <p>What is your desired occupation?</p>
+          <p class='quickPitch'>Need volunteers for the social event you have in mind? Have a cool start-up idea and need to recruit?
+            Want to network with people and learn from seniors in your field? Quickly get conversations started by using our tool to search within your LinkedIn connections and get 
+            pre-filled, customizable messages to send to your personal connections! </p>
+          <p>What skill or profession would you like to find people to connect with?</p>
           <input type="text" id="occupation">
             <button type="button" onclick="getOcc()" name="button">Find</button>
           </form>
