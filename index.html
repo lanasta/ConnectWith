@@ -8,6 +8,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="/master.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700i,900&display=swap" rel="stylesheet">
     <script>
 
 
@@ -32,14 +33,19 @@
           } else { // show the result
             var result = JSON.parse(xhr.response);
             result = result.searchResults;
-            var htmlContent = "<div>";
+            var htmlContent = "<div class = \"results-box\" >";
             for (var i in result) {
                 console.log(result[i]);
                 for (var k in result[i]) {
                     var item = result[i][k];
                     console.log(item);
                     for (var j in item) {
-                        htmlContent += "<p>" + item[j] + "</p>";
+                      if (j == "name"){
+                        htmlContent += "<p class = \"people\" id = \"name\">" + item[j] + "</p>";
+                        }
+                      else{
+                          htmlContent += "<p class = \"people\">" + item[j] + "</p>";
+                      }
                     }
                 }
                 htmlContent += "<br>";
@@ -58,7 +64,7 @@
                 <h1 id='connectLogo'> Connect</h1>
                 <h2 id='withLogo' > With</h2>
                 </div>
-                
+
 <div>
     <h1>What is your desired occupation?</h1>
     <input type="text" id="occupation">

@@ -16,30 +16,56 @@ body {
 div {
     border-radius: 0.5em;
 }
+#name{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  color: black;
+  font-size:1.5em;
+  padding-left: 3.5em;
+  padding-top: 1.0em;
+  margin-bottom: .5em;
+  border-top: 1px solid silver;
 
+}
+.people{
+  font-family: 'Roboto', sans-serif;
+  color:black;
+  text-align:left;
+  padding-left: 5em;
+  margin-top:0.2em;
+  margin-bottom:0em;
+
+
+
+}
+.results-box{
+  color:red;
+}
 a:link, a:visited {
     color: #38488f;
     text-decoration: none;
 }
+
+
 @media (max-width: 700px) {
     div {
         margin: 0 auto;
         width: auto;
     }
 }
-  
+
   h1{
     font-family: 'Raleway', sans-serif;
     color: #8a009a;
   }
-  
+
   #connectLogo, #withLogo {
     display: inline-block;
     float: none;
     position: relative;
     font-size: 300%;
   }
-  
+
   h2{
     font-family: 'Courgette', cursive;
     color:#efaa05;
