@@ -32,7 +32,7 @@
           } else { // show the result
             var result = JSON.parse(xhr.response);
             result = result.searchResults;
-            var htmlContent = "<div class = \"results-box\" >";
+            var htmlContent = "<div class = \"results-box\" ><p class='resultsTitle'>Results for \"" + skillName + "\"</p>";
             for (var i in result) {
                 console.log(result[i]);
                 for (var k in result[i]) {
