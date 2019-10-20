@@ -26,15 +26,28 @@ app.get('/', function(req, res) {
 
 app.get('/api/searchConnections/:skill', async (req, res) => {
     var skill = req.params.skill;
-    getLinkedInConnections(skill, (result) => {
+    getLinkedInConnections(skill, false, (result) => {
         console.log(result); // "Some User token"
         res.json(result);
     });
 })
 
+app.post('/api/sendMessage/:skill', async (req, res) => {
+    var skill = req.params.skill;
+    var linkedInMsg = req.body.msg;
+    var name = req.body.name;
+    getLinkedInConnections(skill, true, (result) => {
+        console.log(result); // "Some User token"
+        res.json(result);
+    }, name, linkedInMsg);
+    res.end("yes");
+})
+
+
+
 app.listen(3000, console.log('Listening on port 3000...'));
 
-async function getLinkedInConnections(keyword, callback) {
+async function getLinkedInConnections(keyword, sendMsg, callback, name, msg) {
     const wsChromeEndpointurl = 'ws://127.0.0.1:9222/devtools/browser/29f61f48-65dc-4480-8882-4f32cafc4258';
     const browser = await puppeteer.connect({
         browserWSEndpoint: wsChromeEndpointurl,
@@ -55,15 +68,18 @@ async function getLinkedInConnections(keyword, callback) {
         'document.querySelector("body").innerText.includes("Try searching for")'
       );
     await buildObjectFromElements(page, callback);
+    if (sendMsg) {
+        await sendMessage(page, name, msg, confirm, callback);
+    }
 }
 
-async function sendMessage(page, name, confirm, callback) {
+async function sendMessage(page, name, msg, confirm, callback) {
     let elements = await page.$$('.message-anywhere-button');
     await elements.map(async (element) => {
         const outerHtml = await page.evaluate(element => element.outerHTML, element);
         if (outerHtml.indexOf(name) > -1){
             await element.click();
-            await page.type('.msg-form__contenteditable', 'test comment whats good', {delay: 20})
+            await page.type('.msg-form__contenteditable', msg , {delay: 20})
             if (confirm) {
                 await page.keyboard.press('Enter');        
             }

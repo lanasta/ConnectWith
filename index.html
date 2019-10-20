@@ -16,7 +16,8 @@
       $(document).ready(function(){
         var currentUser = {};
         var usersList = {};
-//  $("#secondMenu").hide();
+        var skillChosen = '';
+        $("#secondMenu").hide();
 
         $("#findButton").click(()=> {
           getOcc();
@@ -34,16 +35,55 @@
           generateMessage("hire");
         });
 
+        $("#button1").click(()=> {
+          addOnMessage("vidCall");
+        });
 
-        
+        $("#button3").click(()=> {
+          addOnMessage("workTogether");
+        });
+
+        $("#button4").click(()=> {
+          addOnMessage("reference");
+        });
+
+        $("#backButton").click(()=> {
+          $("#secondMenu").hide();
+          $("#firstMenu").show();
+        });
+
+        $("#sendMsgButton").click(()=> {
+          sendRequestForSendMessage(skillChosen, currentUser.name,  $("#messageToSend").html());
+        });
+
+        function generateMessage(mode) {
+          console.log(currentUser);
+          var msg = "Hello " + currentUser.name + "! I hope you’re having a good day. I’m reaching out to you as I saw that you have the skillset that we are looking for. I would love to discuss your career further, as I believe you’d make a good addition to our team!";
+          if (mode == "jobSearch") {
+            msg = "Hello " + currentUser.name + "! Hope this message finds you well. I’m reaching out to you as I’m interested in the work your organization does and would love to have the chance to discuss it further with you."
+          } else if (mode == "network") {
+            msg = "Hello " + currentUser.name + "! I hope you’re having a good day. I’m reaching out to you as I saw that you are in the same field as me and as someone working towards the same career goals, I’d love to connect with you and talk about our shared interests."
+          }
+          $("#messageToSend").html(msg);
+        }
+
+        function addOnMessage(mode) {
+          var curMsg = $("#messageToSend").html();
+          if (mode == 'vidCall') {
+            curMsg += " Let's talk through Skype or Zoom when you have time.";
+          }
+          if (mode == "workTogether") {
+            curMsg += " I would really love it if we could work together on this project I have in mind. Let me know if you want to hear about it.";
+          }
+          if (mode == "reference") {
+            curMsg += " If possible, could you refer me to someone who might be able to help me with this?";
+          }
+          $("#messageToSend").html(curMsg);
+        }
 
         $('body').on('click', '.messageButton', function() {
-            console.log(this);
             var buttonId = this.id;
-            console.log(buttonId);
             var key =  buttonId.replace('MessageButton','');
-            console.log(key);
-            console.log(usersList);
             const user = getUserObj(key);
             renderSendMessageMenu(user);
         });
@@ -51,7 +91,8 @@
         function renderSendMessageMenu(user) {
           $("#firstMenu").hide();
           $("#secondMenu").show();
-
+          currentUser = user;
+          generateMessage("network");
         }
 
         function getUserObj(keyName) {
@@ -65,6 +106,15 @@
         function getOcc(){
           var x = document.getElementById("occupation").value;
           sendRequestForSkillSearch(x);
+          skillChosen = x;
+        }
+
+        function sendRequestForSendMessage(skillName, name, msg){
+          var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+          var theUrl = '/api/sendMessage/' + skillName;
+          xmlhttp.open("POST", theUrl);
+          xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+          xmlhttp.send(JSON.stringify({ "name": name, "response": { "name": name, "msg": msg } }));
         }
 
         function sendRequestForSkillSearch(skillName) {
@@ -137,6 +187,7 @@
             </p>
           </div>
           <div id='secondMenu'>
+            <div><i id="backButton" class="fa fa-arrow-left" aria-hidden="true"></i></div>
             <div class='results-box' style='padding-bottom:3em'><p class='resultsTitle'>Select message template</p></div>
             <div class="flex-box">
                 <div class="row1">
@@ -147,14 +198,15 @@
                 <div class="row2">
                   <div id="column1"> <textarea id='messageToSend'>Click one of the menus above to explore message template options</textarea> </div>
                     <div id="column2">
-                      <div id="button1"><button class='msgAddon' type="link" name="button1"> <a id='link' href= "https://..."> Ask for a <b>video call</b>.</a> </button><div>
-                      <div id="button3"><button class='msgAddon' type="link" name="button3"> <a id='link' href= "https://..."> Ask to <b>work together</b>.</a></button></div>
-                      <div id="button4"><button class='msgAddon' type="link" name="button4"> <a id='link' href= "https://..."> Ask for a <b>reference</b>.</a></button></div>
+                      <div><button id="button1" class='msgAddon' type="link" name="button1"> <a id='link'> Ask for a <b>video call</b></a> </button><div>
+                      <div ><button id="button3" class='msgAddon' type="link" name="button3"> <a id='link'> Ask to <b>work together</b></a></button></div>
+                      <div><button  id="button4" class='msgAddon' type="link" name="button4"> <a id='link'> Ask for a <b>reference</b></a></button></div>
                 </div>
               </div>
               </div>
               </div>
             </div>
+            <button type="button" id='sendMsgButton' name="button">I'm ready to send my message on LinkedIn!</button>
         </div>
   </div>
 </body>

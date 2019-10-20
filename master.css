@@ -184,6 +184,7 @@ footer {
   bottom: 0;
   font-size: 12px;
   line-height: 70px;
+  margin-top: 5em;
 }
 
 i.fa.fa-envelope-o {
@@ -288,6 +289,7 @@ textarea {
   font-size: 14px;
   border: 2px solid #E8D000;
   border-radius: 5px;
+  line-height: 1.5;
 }
 
 .msgAddon {
@@ -304,4 +306,13 @@ textarea {
   width: 100%;
   border-top: 2px solid #E8D000;
   cursor: pointer;
+}
+
+#sendMsgButton{
+  margin-top: 1em;
+  cursor: pointer;
+}
+
+#backButton {
+  font-size: 2.5em;
 }
