@@ -1,17 +1,4 @@
-@font-face {
-    @font-family:"Helvetica";
-    src: url("/test1/helvetica-neue-bold.ttf") format ("ttf");
-}
-
-@font-face {
-    @font-family: "Intro";
-    src: url("/test1/intro.otf") format ("otf");
-}
-
-@font-face {
-    @font-family: "Gist";
-    src: url("/test1/GistLight.otf") format=("otf");
-}
+@import url('https://fonts.googleapis.com/css?family=Courgette|Raleway:900&display=swap');
 
 * {
     box-sizing: border-box;
@@ -42,7 +29,7 @@ a:link, a:visited {
 }
   
   h1{
-    font-family: "Intro";
+    font-family: 'Raleway', sans-serif;
     color: #8a009a;
   }
   
@@ -54,7 +41,7 @@ a:link, a:visited {
   }
   
   h2{
-    font-family: "Gist";
+    font-family: 'Courgette', cursive;
     color:#efaa05;
     display:inline;
   }
