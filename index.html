@@ -57,7 +57,6 @@
         });
 
         function generateMessage(mode) {
-          console.log(currentUser);
           var msg = "Hello " + currentUser.name + "! I hope you’re having a good day. I’m reaching out to you as I saw that you have the skillset that we are looking for. I would love to discuss your career further, as I believe you’d make a good addition to our team!";
           if (mode == "jobSearch") {
             msg = "Hello " + currentUser.name + "! Hope this message finds you well. I’m reaching out to you as I’m interested in the work your organization does and would love to have the chance to discuss it further with you."
@@ -115,6 +114,14 @@
           xmlhttp.open("POST", theUrl);
           xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
           xmlhttp.send(JSON.stringify({ "name": name, "response": { "name": name, "msg": msg } }));
+          var copyText = document.getElementById("messageToSend");
+          /* Select the text field */
+          copyText.select();
+          copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+          /* Copy the text inside the text field */
+          document.execCommand("copy");
+
         }
 
         function sendRequestForSkillSearch(skillName) {
@@ -206,7 +213,7 @@
               </div>
               </div>
             </div>
-            <button type="button" id='sendMsgButton' name="button">I'm ready to send my message on LinkedIn!</button>
+            <button type="button" id='sendMsgButton' name="button">Copy message to clipboard and send through LinkedIn!</button>
         </div>
   </div>
 </body>

@@ -2,6 +2,9 @@ const puppeteer = require('puppeteer');
 const express = require('express');
 const path = require('path');
 const app = express();
+const bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 let searchResults = {};
 
 app.get('/logo.png', function(req, res) {
@@ -34,13 +37,13 @@ app.get('/api/searchConnections/:skill', async (req, res) => {
 
 app.post('/api/sendMessage/:skill', async (req, res) => {
     var skill = req.params.skill;
+    console.log(req.body);
     var linkedInMsg = req.body.msg;
     var name = req.body.name;
+    console.log(linkedInMsg);
     getLinkedInConnections(skill, true, (result) => {
-        console.log(result); // "Some User token"
-        res.json(result);
+        res.json(req.body);
     }, name, linkedInMsg);
-    res.end("yes");
 })
 
 
@@ -69,16 +72,18 @@ async function getLinkedInConnections(keyword, sendMsg, callback, name, msg) {
       );
     await buildObjectFromElements(page, callback);
     if (sendMsg) {
-        await sendMessage(page, name, msg, confirm, callback);
+        await sendMessage(page, name, msg, false, callback);
     }
 }
 
 async function sendMessage(page, name, msg, confirm, callback) {
+    console.log(msg);
     let elements = await page.$$('.message-anywhere-button');
     await elements.map(async (element) => {
         const outerHtml = await page.evaluate(element => element.outerHTML, element);
         if (outerHtml.indexOf(name) > -1){
             await element.click();
+            console.log(msg);
             await page.type('.msg-form__contenteditable', msg , {delay: 20})
             if (confirm) {
                 await page.keyboard.press('Enter');        
