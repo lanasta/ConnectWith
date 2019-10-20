@@ -10,13 +10,7 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/master.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700i,900&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-    $(document).ready(function(){
-      $("#findConnectionsButton").click(function(){
-        getOcc();
-      });
-      
       function getOcc(){
         var x = document.getElementById("occupation").value;
         sendRequestForSkillSearch(x);
@@ -60,7 +54,6 @@
           }
           };
       }
-    });
 
     </script>
 </head>
@@ -82,9 +75,9 @@
           <p class='quickPitch'>Need volunteers for the social event you have in mind? Have a cool start-up idea and need to recruit?
             Want to network with people and learn from seniors in your field? Quickly get conversations started by using our tool to search within your LinkedIn connections and get
             pre-filled, customizable messages to send to your personal connections! </p>
-          <p>What skill or profession would you like to find people to connect with?</p>
+          <p>What related interest, skill or profession would you like to find people to connect with?</p>
           <input type="text" id="occupation">
-            <button id="findConnectionsButton" type="button" onclick="getOcc()" name="button">Find</button>
+            <button type="button" onclick="getOcc()" name="button">Find</button>
           </form>
           <p id='searchRes'>
 
@@ -97,6 +90,6 @@
   </div>
 </body>
 <footer>
-    Made at HackHarvard in Boston, MA by Anastasia, Brandon, Anushka, Abdulai
+    Made at HackHarvard '19 in Boston, MA by Anastasia, Brandon, Anushka, Abdulai
 </footer>
 </html>

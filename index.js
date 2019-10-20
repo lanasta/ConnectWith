@@ -36,7 +36,7 @@ app.get('/api/searchConnections/:skill', async (req, res) => {
 app.listen(3000, console.log('Listening on port 3000...'));
 
 async function getLinkedInConnections(keyword, callback) {
-    const wsChromeEndpointurl = 'ws://127.0.0.1:9222/devtools/browser/6ac0255a-d963-4165-9efe-c32375f8ebf3';
+    const wsChromeEndpointurl = 'ws://127.0.0.1:9222/devtools/browser/29f61f48-65dc-4480-8882-4f32cafc4258';
     const browser = await puppeteer.connect({
         browserWSEndpoint: wsChromeEndpointurl,
         headless: true
@@ -73,7 +73,7 @@ async function buildObjectFromElements(page, callback) {
         properties.location = await parseTextElement(page, locations);
         let profileSnippets = await element.$$('.search-result__snippets');
         properties.profileSnippet = await parseTextElement(page, profileSnippets);
-        let keyName = await transformToKey(properties.name);
+        let keyName = await transformToKey(properties.name);  
         let userObj = {};
         userObj[keyName] = properties;
         userSearchResults.push(userObj);
